@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title> КАЗИНО РХТУ</title>
+
+  <style>
+ 
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #2b0055 0%, #070014 60%, #000 100%);
+      color: #fff;
+      line-height: 1.4;
+      overflow-x: hidden;
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: .25; }
+    }
+    @keyframes glow {
+      0% { filter: drop-shadow(0 0 0px rgba(255,255,255,0)); }
+      50% { filter: drop-shadow(0 0 12px rgba(255,230,0,.85)); }
+      100% { filter: drop-shadow(0 0 0px rgba(255,255,255,0)); }
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-2px); }
+      50% { transform: translateX(2px); }
+      75% { transform: translateX(-1px); }
+      100% { transform: translateX(0); }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(120%); }
+      to { transform: translateY(0); }
+    }
+    @keyframes slideInRight {
+      from { transform: translateX(110%); }
+      to { transform: translateX(0); }
+    }
+
+    @keyframes iconBlink {
+      0%, 45%   { opacity: 1; transform: scale(1); }
+      50%, 100% { opacity: 0; transform: scale(0.9); }
+    }
+    .toast .icon {
+      display: inline-block;
+      margin-right: 6px;
+      animation: iconBlink 0.9s infinite;
+    }
+    .toast.t1 .icon { animation-duration: 0.7s; }
+    .toast.t2 .icon { animation-duration: 0.9s; }
+    .toast.t3 .icon { animation-duration: 1.1s; }
+
+    header {
+      background: linear-gradient(90deg, #ff00cc, #00d4ff, #ffe600, #ff00cc);
+      border-bottom: 5px solid #ffe600;
+      padding: 14px 12px;
+      text-shadow: 2px 2px 0 #000;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      animation: glow 1.2s infinite;
+    }
+
+    .topbar {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;                
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;               
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: #000;
+      border: 3px solid #ffe600;
+      display: grid;                
+      place-items: center;
+      font-weight: 900;
+      color: #ffe600;
+      animation: blink .6s infinite, shake .9s infinite;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 1px;
+    }
+
+    .brand small {
+      display: block;
+      font-size: 12px;
+      opacity: 0.95;
+    }
+
+    .actions {
+      display: flex;                
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 2px solid #000;
+      background: #ffe600;
+      color: #000;
+      font-weight: 900;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 0 16px rgba(255,230,0,.55);
+      animation: glow 1.1s infinite;
+    }
+    .btn:hover { background: #00d4ff; }
+    .btn-danger {
+      background: #ff00cc;
+      color: #fff;
+      border-color: #000;
+      box-shadow: 0 0 18px rgba(255,0,204,.55);
+      animation: blink .5s infinite, shake .8s infinite;
+    }
+
+    .ticker {
+      background: #000;
+      border-top: 2px dashed #00d4ff;
+      border-bottom: 2px dashed #00d4ff;
+      padding: 8px 0;
+      overflow: hidden;
+    }
+    .ticker span {
+      display: inline-block;
+      padding-left: 100%;
+      white-space: nowrap;
+      font-weight: 900;
+      color: #00d4ff;
+      text-shadow: 0 0 10px rgba(0,212,255,.7);
+      animation: tickerMove 10s linear infinite;
+    }
+    @keyframes tickerMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-120%); }
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 14px auto 70px;
+      padding: 0 12px;
+      display: grid;               
+      grid-template-columns: 230px 1fr 230px;
+      gap: 12px;
+      align-items: start;
+    }
+
+    aside {
+      position: sticky;
+      top: 96px;
+      background: rgba(255,255,255,0.06);
+      border: 2px dashed #00d4ff;
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 0 18px rgba(0,212,255,.25);
+    }
+
+    .ad {
+      background: #000;
+      border-radius: 14px;
+      border: 3px solid #ff00cc;
+      padding: 10px;
+      margin-bottom: 10px;
+      animation: blink 1s infinite;
+    }
+    .ad:nth-child(2) { border-color: #ffe600; animation-duration: .7s; }
+    .ad:nth-child(3) { border-color: #00d4ff; animation-duration: .5s; }
+
+    .ad h3 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      color: #ffe600;
+      text-shadow: 0 0 10px rgba(255,230,0,.8);
+    }
+    .ad p {
+      margin: 0 0 8px;
+      font-size: 13px;
+      opacity: .95;
+    }
+    .ad .mini {
+      font-size: 11px;
+      opacity: .75;
+    }
+
+    .content {
+      display: flex;                
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    article {
+      background: rgba(255,255,255,0.08);
+      border: 2px solid rgba(255,255,255,0.16);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 0 20px rgba(255,0,204,.18);
+    }
+
+    article > h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #00d4ff;
+      text-shadow: 0 0 12px rgba(0,212,255,.55);
+      border-bottom: 2px dashed rgba(0,212,255,.6);
+      padding-bottom: 6px;
+      animation: blink 1.2s infinite;
+    }
+
+    section {
+      border: 2px solid rgba(255,230,0,.35);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: rgba(0,0,0,0.35);
+    }
+    section:last-child { margin-bottom: 0; }
+
+    section > h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      color: #ffe600;
+      text-shadow: 0 0 10px rgba(255,230,0,.55);
+      animation: glow 1.1s infinite;
+    }
+
+    .hero {
+      display: grid;                
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 10px;
+      align-items: center;
+      border-color: rgba(255,0,204,.7);
+      box-shadow: 0 0 18px rgba(255,0,204,.35);
+    }
+
+    .badges {
+      display: flex;                
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .badge {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #000;
+      border: 2px solid #00d4ff;
+      color: #00d4ff;
+      font-weight: 900;
+      font-size: 12px;
+      animation: blink .9s infinite;
+    }
+
+    .slot {
+      background: #000;
+      border: 3px solid #00d4ff;
+      border-radius: 14px;
+      padding: 10px;
+      text-align: center;
+    }
+    .slotRow {
+      display: flex;             
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .reel {
+      width: 72px;
+      height: 72px;
+      border-radius: 12px;
+      border: 3px solid #ffe600;
+      display: grid;                
+      place-items: center;
+      font-size: 34px;
+      background: linear-gradient(180deg, #1a0033, #000);
+      animation: shake .5s infinite;
+    }
+
+    .sloganGrid {
+      display: grid;                
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .slogan {
+      background: linear-gradient(90deg, #ff0000, #ff00cc, #00d4ff);
+      border: 3px solid #000;
+      border-radius: 12px;
+      padding: 10px;
+      font-weight: 900;
+      text-align: center;
+      text-shadow: 2px 2px 0 #000;
+      animation: blink .6s infinite;
+    }
+
+    ol { margin: 0; padding-left: 20px; }
+    li { margin: 8px 0; }
+
+    .reviews {
+      display: flex;                
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .review {
+      flex: 1 1 220px;              
+      background: #000;
+      border: 3px solid #ffe600;
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 0 14px rgba(255,230,0,.25);
+      animation: blink .8s infinite;
+    }
+    .review b { color: #00d4ff; }
+
+    .popupOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      z-index: 100;
+    }
+    .popupOverlay:target { display: block; }
+
+    .popup {
+      max-width: 520px;
+      margin: 10vh auto;
+      background: #000;
+      border: 5px solid #ff00cc;
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 0 30px rgba(255,0,204,.5);
+      animation: shake .8s infinite;
+    }
+    .popup h2 {
+      margin: 0 0 8px;
+      color: #ffe600;
+      text-shadow: 0 0 12px rgba(255,230,0,.7);
+      animation: blink .5s infinite;
+    }
+    .popup p { margin: 0 0 10px; }
+    .popup .row {
+      display: flex;                
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .closeLink {
+      display: inline-block;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 2px solid #000;
+      background: #00d4ff;
+      color: #000;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .bottomBar {
+      position: fixed;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      z-index: 60;
+      background: linear-gradient(90deg, #ff00cc, #ffe600, #00d4ff);
+      border: 4px solid #000;
+      border-radius: 14px;
+      padding: 10px;
+      display: flex;              
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      animation: slideUp .4s ease-out, blink .7s infinite;
+      box-shadow: 0 0 22px rgba(255,230,0,.35);
+    }
+    .bottomBar b { color: #000; }
+    .bottomBar small { color: #000; font-weight: 900; }
+
+    .toast {
+      position: fixed;
+      right: 12px;
+      top: 120px;
+      z-index: 70;
+      width: 260px;
+      background: #000;
+      border: 3px solid #00d4ff;
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 0 18px rgba(0,212,255,.35);
+      animation: slideInRight .35s ease-out;
+    }
+    .toast h4 {
+      margin: 0 0 6px;
+      font-size: 13px;
+      color: #ffe600;
+      animation: blink .7s infinite;
+    }
+    .toast p { margin: 0; font-size: 12px; opacity: .92; }
+
+    .t1 { animation-delay: 0s; }
+    .t2 { top: 215px; border-color: #ff00cc; }
+    .t3 { top: 310px; border-color: #ffe600; }
+
+    @media (max-width: 980px) {
+      main { grid-template-columns: 1fr; } 
+      aside { position: static; }
+      .toast { display: none; }
+    }
+    @media (max-width: 600px) {
+      .hero { grid-template-columns: 1fr; }
+      .sloganGrid { grid-template-columns: 1fr; }
+      .actions { width: 100%; }
+      .btn { width: 100%; text-align: center; }
+      .bottomBar { flex-direction: column; align-items: stretch; }
+    }
+    @media (max-width: 360px) { 
+      body { font-size: 15px; }
+      .reel { width: 64px; height: 64px; font-size: 30px; }
+      .brand h1 { font-size: 16px; }
+      header { padding: 12px 10px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">Д.И</div>
+      <div>
+        <h1> КАЗИНО РХТУ ✨"Лучший вуз страны"✨</h1>
+        <small>Самое лучшее казино в РОССИИ!!!!!! (Рекомендует АРТЕМИЙ ЛЕБЕДЕВ)</small>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a class="btn btn-danger" href="#BONUS">👉ЗАБРАТЬ БОНУС!!!</a>
+      <a class="btn" href="#top5">👉ТОП-5 причин</a>
+      <a class="btn" href="#reviews">👉ОТЗЫВЫ</a>
+    </div>
+  </div>
+</header>
+
+<div class="ticker">
+  <span>🔥 ВНИМАНИЕ!!! СУПЕР-БОНУС!!! ДЖЕКПОТ!!! VIP!!! “ТОЛЬКО СЕЙЧАС”!!! 🔥</span>
+</div>
+
+<div class="toast t1">
+  <h4><span class="icon">🏆</span>Кто-то “выиграл” 999 999!</h4>
+  <p>Ты можешь тоже выиграть!!!!</p>
+</div>
+<div class="toast t2">
+  <h4><span class="icon">🎁</span>БОНУС УЖЕ ЖДЁТ!!!</h4>
+  <p>Жми “ЗАБРАТЬ”, чтобы забрать кэш.</p>
+</div>
+<div class="toast t3">
+  <h4><span class="icon">⚠️</span>АКЦИЯ СКОРО ЗАКОНЧИТСЯ</h4>
+  <p>Нажимай быстрее!!!</p>
+</div>
+
+<main>
+
+  <aside>
+    <div class="ad">
+      <h3>💥 VIP-СТАТУС СРОЧНО!!!</h3>
+      <p>Премиум подписка на жизнь‼️💸💲</p>
+      <a class="btn" href="#BONUS">ХОЧУ VIP</a>
+      <div class="mini"></div>
+    </div>
+
+    <div class="ad">
+      <h3>🍕 Пицца “Дедлайн”</h3>
+      <p>Приезжает, когда сдашь лабу. Иногда.</p>
+      <a class="btn" href="#top5">ЗАКАЗАТЬ‼️</a>
+    </div>
+    </div>
+  </aside>
+
+  <div class="content">
+
+    <article>
+      <h2>СМОТРЕТЬ СЮДА💸💸💸💸💸💸 </h2>
+
+      <section class="hero">
+        <div>
+          <h3>🎰КРУТИ БАРАБАНЫ ПРЯМО СЕЙЧАС!!!🎰 </h3>
+          <div class="badges">
+            <span class="badge">100р💲</span>
+            <span class="badge">500р💲 </span>
+            <span class="badge">ШАМАН💲 </span>
+            <span class="badge">ЕКАТЕРИНА МИЗУЛИНАр💲</span>
+          </div>
+          <p style="margin-top:10px;">
+            <a class="btn btn-danger" href="#BONUS">ОТКРОЙ БОНУС!!!👑</a>
+            <a class="btn" href="#top5">СМОТРЕТЬ ТОП-5👑</a>
+          </p>
+        </div>
+
+        <div class="slot" aria-label=>
+          <div style="font-weight:900;color:#00d4ff;">КРУТАНИ ШАМАНА</div>
+          <div class="slotRow">
+            <div class="reel">👨🏽‍💻</div>
+            <div class="reel">👨🏽‍💻</div>
+            <div class="reel">👨🏽‍💻</div>
+          </div>
+          <div style="margin-top:8px;font-size:12px;opacity:.9;">
+            👑ТЫ ТОЖЕ МОЖЕШЬ ВЫИГРАТЬ!👑
+          </div>
+        </div>
+      </section>
+    </article>
+
+    <article id="top5">
+      <h2>⭐ТОП-5 ПРИЧИН ПОЧЕМУ У МЕНЯ ПРЕКРАСНЫЙ САЙТ⭐</h2>
+
+      <section>
+        <h3>⭐ДА ДА САМЫЙ КЛАССНЫЙ⭐</h3>
+        <ol>
+          <li><b>ОН СВЕТИТСЯ🤑</b></li>
+          <li><b>ДОВЕДЁТ ВАС ДО ЭПИЛЕПСИИ🤑</b></li>
+          <li><b>ОН ПРИКОЛЬНЫЙ🤑</b></li>
+          <li><b>САМЫЙ БЕЗОПАСНЫЙ🤑</b></li>
+          <li><b>ОН НЕ ДУШНЫЙ🤑</b></li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>
+          ПОДПИСКА НА МОЙ ТГ КАНАЛ (ПРИЧИНЫ):
+          <a href="https://t.me/+Nc2NtYgG2ERiZDFi" target="_blank" style="color:#00d4ff;">
+            ПЕРЕЙТИ В TELEGRAM
+          </a>
+        </h3>
+        <div class="sloganGrid">
+          <div class="slogan">“ТОЛЬКО СЕЙЧАС!!! (каждый день)”</div>
+          <div class="slogan">“ОН ЭСТЕТИЧНЫЙ”</div>
+          <div class="slogan">“ОН НЕОБЫЧНЫЙ”</div>
+          <div class="slogan">“ПРИНЕСЁТ УДАЧУ”</div>
+        </div>
+      </section>
+    </article>
+
+    <article id="reviews">
+      <h2>🚀ОТЗЫВЫ🚀</h2>
+
+      <section>
+        <h3>Отзывы</h3>
+        <div class="reviews">
+          <div class="review">
+            <b>ЕКАТЕРИНА МИЗУЛИНА</b><br>
+            ★★★★★<br>
+            Сайт настолько классный, что я его запретила!
+          </div>
+          <div class="review">
+            <b>ШАМАН</b><br>
+            ★★★★☆<br>
+            СНИМАЮ ОДНУ ЗВЕЗДУ, НЕТУ ПЕСНИ "Я РУССКИЙ"
+          </div>
+          <div class="review">
+            <b>ЭПШТЕЙН</b><br>
+            ★★★★★<br>
+            Я ВЫИГРАЛ РЕБЕНКА!!!!!
+          </div>
+        </div>
+      </section>
+    </article>
+
+  </div>
+
+  <aside>
+    <div class="ad">
+      <h3>🎰 СУПЕР-ДЖЕКПОТ 1 000 000</h3>
+      <p>Выиграй право получить ссылку на мой тг канал.</p>
+      <a class="btn btn-danger" href="#BONUS">ЗАБРАТЬ!!!</a>
+    </div>
+
+    <div class="ad">
+      <h3>📢РЕКЛАМА</h3>
+      <p>баннер баннера</p>
+      <a class="btn" href="#top5">СМОТРЕТЬ</a>
+      <div class="mini">* смысл отсутствует</div>
+    </div>
+
+    <div class="ad">
+      <h3>💸 999% “БОНУС”</h3>
+      <p>Бонусом будет… еще одна ссылка на мой тг канал.</p>
+      <a class="btn" href="#BONUS">ОТКРЫТЬ</a>
+    </div>
+  </aside>
+</main>
+
+<div class="bottomBar">
+  <div>
+    <b>🔥 СУПЕР-ПРЕДЛОЖЕНИЕ!!!</b>
+    <small>Нажми “БОНУС”, чтобы увидеть...</small>
+  </div>
+  <a class="btn btn-danger" href="#BONUS">БОНУС!!!</a>
+</div>
+
+<div id="BONUS" class="popupOverlay">
+  <div class="popup">
+    <h2>🎁 ВЫ “ВЫИГРАЛИ” БОНУС!!!</h2>
+    <p>
+      ОП! Поздравляем! ВЫ выиграли ещё одну подписку на мой тг канал
+      <br><br>
+      <a href="https://t.me/+Nc2NtYgG2ERiZDFi" target="_blank" class="btn">
+        ПЕРЕЙТИ В TELEGRAM
+      </a>
+    </p>
+    <div class="row">
+      <a class="btn btn-danger" href="#top5">ПРОДОЛЖИТЬ</a>
+      <a class="closeLink" href="#">ЗАКРЫТЬ</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
