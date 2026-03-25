@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЛР №6 — Работа с API</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="brand">
+                <h1>Лабораторная работа №6</h1>
+            </div>
+
+            <nav class="main-nav" aria-label="Основная навигация">
+                <a href="#posts">Посты</a>
+                <a href="#dogs">Собаки</a>
+                <a href="#weather">Погода</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="hero">
+            <h2>Работа с внешними API</h2>
+        </section>
+
+        <section id="posts" class="panel">
+            <div class="section-head">
+                <div>
+                    <h2>1. JSONPlaceholder — посты</h2>
+                    <p>GET, POST, PATCH, DELETE</p>
+                </div>
+                <button id="load-posts-btn" class="button">Загрузить посты</button>
+            </div>
+
+            <div class="two-column">
+                <article class="card">
+                    <h3>Создать пост</h3>
+                    <form id="post-form">
+                        <div class="form-group">
+                            <label for="post-title">Заголовок</label>
+                            <input id="post-title" name="title" type="text" placeholder="Введите заголовок">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="post-body">Текст поста</label>
+                            <textarea id="post-body" name="body" placeholder="Введите текст"></textarea>
+                        </div>
+
+                        <button type="submit" class="button button-primary">Отправить POST</button>
+                    </form>
+                </article>
+
+                <article class="card">
+                    <h3>Изменить пост</h3>
+                    <form id="patch-form">
+                        <div class="form-group">
+                            <label for="patch-id">ID поста</label>
+                            <input id="patch-id" name="id" type="number" min="1" placeholder="Например: 1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="patch-title">Новый заголовок</label>
+                            <input id="patch-title" name="title" type="text" placeholder="Новый заголовок">
+                        </div>
+
+                        <button type="submit" class="button button-primary">Отправить PATCH</button>
+                    </form>
+                </article>
+            </div>
+
+            <article class="card delete-card">
+                <h3>Удалить пост</h3>
+                <form id="delete-form" class="inline-form">
+                    <div class="form-group">
+                        <label for="delete-id">ID поста</label>
+                        <input id="delete-id" name="id" type="number" min="1" placeholder="Например: 1">
+                    </div>
+                    <button type="submit" class="button button-danger">Отправить DELETE</button>
+                </form>
+            </article>
+
+            <article class="card">
+                <h3>Результат HTTP-запросов</h3>
+                <div id="crud-result" class="result-box">Пока запросы не выполнялись.</div>
+            </article>
+
+            <article class="card">
+                <h3>Список постов</h3>
+                <div id="posts-state" class="state-box">Нажмите «Загрузить посты».</div>
+                <div id="posts-list" class="grid-list"></div>
+            </article>
+        </section>
+
+        <section id="dogs" class="panel">
+            <div class="section-head">
+                <div>
+                    <h2>2. Dog API — породы и изображения</h2>
+                    <p>GET-запросы для списка пород и случайных фото</p>
+                </div>
+                <button id="load-breeds-btn" class="button">Загрузить породы</button>
+            </div>
+
+            <article class="card">
+                <h3>Получить случайные изображения</h3>
+                <form id="dog-form" class="inline-form">
+                    <div class="form-group">
+                        <label for="dog-breed">Порода</label>
+                        <input id="dog-breed" name="breed" type="text" placeholder="Например: hound">
+                    </div>
+                    <button type="submit" class="button button-primary">Показать фото</button>
+                </form>
+            </article>
+
+            <article class="card">
+                <h3>Список пород</h3>
+                <div id="breeds-state" class="state-box">Нажмите «Загрузить породы».</div>
+                <div id="breeds-list" class="tag-list"></div>
+            </article>
+
+            <article class="card">
+                <h3>Фотографии собак</h3>
+                <div id="dogs-state" class="state-box">Введите породу и отправьте запрос.</div>
+                <div id="dog-images" class="image-grid"></div>
+            </article>
+        </section>
+
+        <section id="weather" class="panel">
+            <div class="section-head">
+                <div>
+                    <h2>3. Open-Meteo — прогноз погоды</h2>
+                    <p>GET-запрос погоды по выбранному городу</p>
+                </div>
+            </div>
+
+            <article class="card">
+                <h3>Выбрать город</h3>
+                <form id="weather-form" class="inline-form">
+                    <div class="form-group">
+                        <label for="weather-city">Город</label>
+                        <select id="weather-city" name="city">
+                            <option value="moscow">Москва</option>
+                            <option value="saint-petersburg">Санкт-Петербург</option>
+                            <option value="kazan">Казань</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="button button-primary">Показать погоду</button>
+                </form>
+            </article>
+
+            <article class="card">
+                <h3>Прогноз</h3>
+                <div id="weather-state" class="state-box">Выберите город и нажмите кнопку.</div>
+                <div id="weather-result" class="weather-box"></div>
+            </article>
+        </section>
+    </main>
+</body>
+</html>
